@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Panel FITYA</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fuentes/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin">
+
+  <!-- Acceso -->
+  <main class="acceso" id="acceso" hidden>
+    <form class="acceso__caja" id="formAcceso">
+      <p class="logo">FITYA</p>
+      <h1>Panel de la tienda</h1>
+      <label class="campo"><span>Correo</span><input type="email" id="aCorreo" autocomplete="username" required></label>
+      <label class="campo"><span>Contraseña</span><input type="password" id="aClave" autocomplete="current-password" required></label>
+      <p class="error" id="aError" hidden></p>
+      <button class="btn btn--oscuro btn--ancho" type="submit">Entrar</button>
+      <a class="tenue centro" href="index.html">Volver a la tienda</a>
+    </form>
+  </main>
+
+  <!-- Panel -->
+  <div class="panel" id="panel" hidden>
+    <aside class="lateral">
+      <a class="logo" href="index.html" title="Ver tienda">FITYA</a>
+      <nav class="nav" aria-label="Secciones">
+        <button data-vista="metricas" aria-current="page">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Métricas</button>
+        <button data-vista="productos">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg>Productos</button>
+        <button data-vista="combos">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18v4H3zM12 9v11M5 13v7h14v-7M12 9C9 9 8 6 9.500 5S12 6 12 9Zm0 0c3 0 4-3 2.500-4S12 6 12 9Z"/></svg>Combos</button>
+        <button data-vista="categorias">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h7v6H4zM13 5h7v6h-7zM4 13h7v6H4zM13 13h7v6h-7z"/></svg>Categorías</button>
+        <button data-vista="tienda">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5 5.5 4h13L20 9.5"/><path d="M4 9.5a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0M5 12v8h14v-8"/></svg>Datos de la tienda</button>
+      </nav>
+      <div class="lateral__pie">
+        <span class="modo" id="modo"></span>
+        <span class="tenue" id="usuario"></span>
+        <button class="enlace" id="salir">Cerrar sesión</button>
+      </div>
+    </aside>
+
+    <main class="contenido">
+      <div class="demo-aviso" id="demoAviso" hidden>
+        <p><b>Modo demo.</b> Los cambios y las métricas se guardan solo en este navegador. Para que queden en la nube y veas las visitas reales, conecta Supabase (instrucciones en LEEME.md).</p>
+      </div>
+
+      <!-- MÉTRICAS -->
+      <section class="vista" id="vista-metricas">
+        <header class="vista__cabeza">
+          <div>
+            <h1>Métricas</h1>
+            <p class="tenue" id="mRango"></p>
+            <a class="enlace" id="mGa" href="https://analytics.google.com/analytics/web/" target="_blank" rel="noopener" hidden>Ver más detalle en Google Analytics</a>
+          </div>
+          <div class="acciones">
+            <div class="segmentos" id="mDias">
+              <label><input type="radio" name="dias" value="1"><span>Hoy</span></label>
+              <label><input type="radio" name="dias" value="7"><span>7 días</span></label>
+              <label><input type="radio" name="dias" value="30" checked><span>30 días</span></label>
+              <label><input type="radio" name="dias" value="90"><span>90 días</span></label>
+            </div>
+            <button class="btn btn--linea" id="mActualizar">Actualizar</button>
+          </div>
+        </header>
+
+        <div class="demo-datos" id="demoDatos" hidden>
+          <p>Todavía no hay visitas registradas. Puedes cargar datos de ejemplo para ver cómo se llena el panel.</p>
+          <button class="btn btn--oscuro" id="cargarEjemplo">Cargar datos de ejemplo</button>
+        </div>
+
+        <div class="cifras" id="cifras"></div>
+
+        <div class="tablero">
+          <article class="caja caja--ancha">
+            <header><h2>Visitas por día</h2><p class="tenue">Personas distintas que entraron a la tienda</p></header>
+            <div class="grafico" id="gVisitas"></div>
+          </article>
+          <article class="caja">
+            <header><h2>Del ingreso al pedido</h2><p class="tenue">Cuántas visitas avanzan en cada paso</p></header>
+            <div id="gEmbudo"></div>
+          </article>
+          <article class="caja">
+            <header><h2>Pedidos por día</h2><p class="tenue">Pedidos enviados a WhatsApp</p></header>
+            <div class="grafico" id="gPedidos"></div>
+          </article>
+          <article class="caja caja--ancha">
+            <header class="caja__cabeza">
+              <div><h2>Productos</h2><p class="tenue">Ordena tocando el nombre de cada columna</p></div>
+              <button class="btn btn--linea" id="mCsv">Descargar CSV</button>
+            </header>
+            <div class="tabla-envoltura"><table class="tabla" id="tProductos"></table></div>
+            <button class="enlace mas-tabla" id="tMas" hidden></button>
+          </article>
+          <article class="caja" id="cajaNumeros" hidden>
+            <header><h2>Pedidos por número</h2><p class="tenue">A qué WhatsApp llegaron los pedidos</p></header>
+            <div id="gNumeros"></div>
+          </article>
+          <article class="caja">
+            <header><h2>Categorías más vistas</h2></header>
+            <div id="gCategorias"></div>
+          </article>
+          <article class="caja">
+            <header><h2>Lo que más buscan</h2><p class="tenue">Las marcadas no encontraron nada: oportunidad de stock</p></header>
+            <div id="gBusquedas"></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- PRODUCTOS -->
+      <section class="vista" id="vista-productos" hidden>
+        <header class="vista__cabeza">
+          <div><h1>Productos</h1><p class="tenue" id="pCuenta"></p></div>
+          <button class="btn btn--marca" id="nuevoProducto">
+            <svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Nuevo producto</button>
+        </header>
+        <div class="filtros-admin">
+          <label class="campo campo--buscar"><input type="search" id="pBuscar" placeholder="Buscar por nombre o marca" aria-label="Buscar productos"></label>
+          <label class="campo"><select id="pCat" aria-label="Categoría"></select></label>
+          <label class="campo"><select id="pEstado" aria-label="Estado">
+            <option value="">Todos</option><option value="stock">Con stock</option><option value="sin">Sin stock</option>
+            <option value="oferta">En oferta</option><option value="destacado">Destacados</option><option value="sinfoto">Sin foto</option>
+          </select></label>
+        </div>
+        <ul class="lista-productos" id="pLista"></ul>
+      </section>
+
+      <!-- COMBOS -->
+      <section class="vista" id="vista-combos" hidden>
+        <header class="vista__cabeza">
+          <div><h1>Combos</h1><p class="tenue">Paquetes de productos a un precio especial para vender más</p></div>
+          <button class="btn btn--marca" id="nuevoCombo">
+            <svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Nuevo combo</button>
+        </header>
+        <ul class="lista-combos" id="kbLista"></ul>
+      </section>
+
+      <!-- CATEGORÍAS -->
+      <section class="vista" id="vista-categorias" hidden>
+        <header class="vista__cabeza">
+          <div><h1>Categorías</h1><p class="tenue">El orden de esta lista es el orden en la tienda</p></div>
+        </header>
+        <ul class="lista-cats" id="cLista"></ul>
+        <form class="nueva-cat" id="cForm">
+          <label class="campo"><span>Nueva categoría</span><input type="text" id="cNueva" placeholder="Ej: Vitaminas" required></label>
+          <button class="btn btn--oscuro" type="submit">Agregar</button>
+        </form>
+      </section>
+
+      <!-- TIENDA -->
+      <section class="vista" id="vista-tienda" hidden>
+        <header class="vista__cabeza">
+          <div><h1>Datos de la tienda</h1><p class="tenue">Lo que aparece en la portada, el pie y en los pedidos</p></div>
+          <button class="btn btn--marca" form="tForm" type="submit">Guardar cambios</button>
+        </header>
+        <form class="form-tienda" id="tForm">
+          <fieldset>
+            <legend>Números de WhatsApp</legend>
+            <p class="tenue">El principal recibe todos los pedidos. Si un producto lo vende otra persona, agrega su número acá y elígelo en ese producto.</p>
+            <ul class="numeros" id="tNumeros"></ul>
+            <button type="button" class="btn btn--linea" id="tNumeroNuevo">Agregar otro número</button>
+          </fieldset>
+          <fieldset>
+            <legend>Portada</legend>
+            <label class="campo"><span>Barra de aviso</span><input type="text" name="aviso"><small class="ayuda">Déjala vacía para ocultarla</small></label>
+            <label class="campo"><span>Título</span><input type="text" name="titulo"></label>
+            <label class="campo"><span>Texto debajo del título</span><textarea name="subtitulo"></textarea></label>
+            <div class="campo">
+              <span>Logo <em>(opcional)</em></span>
+              <div class="logo-carga">
+                <div class="logo-carga__vista" id="tLogoVista"></div>
+                <label class="btn btn--linea"><input type="file" accept="image/*" id="tLogo" hidden>Subir logo</label>
+                <button type="button" class="enlace" id="tLogoQuitar">Quitar</button>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Entregas y pagos</legend>
+            <label class="campo"><span>Ciudad</span><input type="text" name="ciudad"></label>
+            <label class="campo"><span>Horario de atención</span><input type="text" name="horario"></label>
+            <label class="campo"><span>Información de envío</span><textarea name="envio"></textarea></label>
+            <label class="campo"><span>Formas de pago</span><textarea name="pagos"></textarea><small class="ayuda">Una por línea. Aparecen como opciones al hacer el pedido</small></label>
+            <label class="campo"><span>Texto para mayoristas</span><textarea name="mayoristas"></textarea></label>
+          </fieldset>
+          <fieldset>
+            <legend>Google Analytics</legend>
+            <label class="campo"><span>ID de medición de GA4</span><input type="text" name="gaId" placeholder="G-XXXXXXXXXX" autocomplete="off" spellcheck="false"><small class="ayuda">Lo encuentras en Google Analytics, en Administrar, Flujos de datos, tu sitio web. Déjalo vacío para no usarlo. Envía visitas, productos vistos, agregados al carrito, búsquedas y pedidos.</small></label>
+          </fieldset>
+          <fieldset>
+            <legend>Redes sociales</legend>
+            <label class="campo"><span>Instagram</span><input type="url" name="instagram" placeholder="https://instagram.com/…"></label>
+            <label class="campo"><span>TikTok</span><input type="url" name="tiktok" placeholder="https://tiktok.com/@…"></label>
+            <label class="campo"><span>Facebook</span><input type="url" name="facebook" placeholder="https://facebook.com/…"></label>
+          </fieldset>
+        </form>
+        <div class="zona-peligro" id="zonaDemo" hidden>
+          <h2>Modo demo</h2>
+          <p class="tenue">Vuelve al catálogo original y borra las métricas guardadas en este navegador.</p>
+          <button class="btn btn--peligro" id="reiniciar">Reiniciar demo</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Editor de producto -->
+  <dialog class="editor" id="editor" aria-labelledby="eTitulo">
+    <form id="eForm" novalidate>
+      <header class="editor__cabeza">
+        <h2 id="eTitulo">Nuevo producto</h2>
+        <button type="button" class="cerrar cerrar--plano" data-cerrar aria-label="Cerrar">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </header>
+      <div class="editor__cuerpo">
+        <div class="editor__fotos">
+          <div class="soltar" id="eSoltar">
+            <input type="file" id="eArchivo" accept="image/*" multiple>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+            <p><b>Arrastra fotos aquí</b> o toca para elegir</p>
+            <small class="tenue">La primera es la principal. Se achican solas para cargar rápido.</small>
+          </div>
+          <ul class="fotos" id="eFotos"></ul>
+          <p class="tenue" id="eSubiendo" hidden>Subiendo fotos…</p>
+        </div>
+        <div class="editor__campos">
+          <label class="campo"><span>Nombre</span><input type="text" name="nombre" required placeholder="Ej: Creatina Scitec 300 g"></label>
+          <div class="fila-2">
+            <label class="campo"><span>Categoría</span><select name="cat" id="eCat"></select></label>
+            <label class="campo"><span>Marca</span><input type="text" name="marca" list="eMarcas"><datalist id="eMarcas"></datalist></label>
+          </div>
+          <div class="fila-3">
+            <label class="campo"><span>Precio (Bs)</span><input type="number" name="precio" min="0" step="0.5" required inputmode="decimal"></label>
+            <label class="campo"><span>Precio antes <em>(oferta)</em></span><input type="number" name="antes" min="0" step="0.5" inputmode="decimal"></label>
+            <label class="campo"><span>Presentación</span><input type="text" name="pres" placeholder="300 g"></label>
+          </div>
+          <label class="check"><input type="checkbox" name="desde"><span>Mostrar “desde” antes del precio (cuando varía según la opción)</span></label>
+          <label class="campo"><span>Descripción <em>(opcional)</em></span><textarea name="descripcion" rows="3"></textarea></label>
+          <label class="campo"><span>Beneficios</span><textarea name="puntos" rows="4"></textarea><small class="ayuda">Uno por línea. Se muestran como lista en el producto</small></label>
+          <div class="campo">
+            <span>Los pedidos de este producto van a</span>
+            <div class="fila-2">
+              <select id="eWa" aria-label="Número de WhatsApp"></select>
+              <input type="tel" id="eWaOtro" placeholder="591 7XXXXXXX" aria-label="Otro número" hidden>
+            </div>
+            <small class="ayuda">Si el cliente mezcla productos de distintos números, la tienda le arma un mensaje para cada uno</small>
+          </div>
+          <label class="campo"><span>Sabores, colores o tallas</span><input type="text" name="opciones" placeholder="Chocolate, Vainilla, Frutilla"><small class="ayuda">Separados por coma. Si los pones, el cliente tiene que elegir uno</small></label>
+          <div class="fila-2">
+            <label class="check"><input type="checkbox" name="disponible"><span>Hay stock</span></label>
+            <label class="check"><input type="checkbox" name="destacado"><span>Destacado (aparece primero)</span></label>
+          </div>
+          <label class="campo campo--corto"><span>Orden</span><input type="number" name="orden" step="1"><small class="ayuda">Número menor aparece antes</small></label>
+          <p class="error" id="eError" hidden></p>
+        </div>
+      </div>
+      <footer class="editor__pie">
+        <button type="button" class="btn btn--linea" data-cerrar>Cancelar</button>
+        <button type="submit" class="btn btn--marca" id="eGuardar">Guardar producto</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Editor de combos -->
+  <dialog class="editor editor--combo" id="editorCombo" aria-labelledby="kcTitulo">
+    <form id="kcForm" method="dialog">
+      <header class="editor__cabeza"><h2 id="kcTitulo">Nuevo combo</h2><button type="button" class="icono-btn" id="kcCerrar" aria-label="Cerrar"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></header>
+      <div class="editor__cuerpo editor__cuerpo--uno">
+        <div class="editor__campos">
+          <label class="campo"><span>Nombre del combo</span><input type="text" id="kcNombre" placeholder="Ej: Combo Fuerza" required></label>
+          <label class="campo"><span>Descripción corta</span><input type="text" id="kcDesc" placeholder="Por qué le conviene al cliente"></label>
+          <div class="campo">
+            <span>Qué incluye</span>
+            <ul class="items-combo" id="kcItems"></ul>
+            <button type="button" class="btn btn--linea" id="kcAgregar">Agregar producto</button>
+          </div>
+          <div class="resumen-combo" id="kcResumen"></div>
+          <div class="fila-2">
+            <label class="campo"><span>Precio del combo (Bs)</span><input type="number" id="kcPrecio" min="1" step="1" required></label>
+            <label class="campo"><span>Pedidos de este combo van a</span><select id="kcWa"></select></label>
+          </div>
+          <label class="check"><input type="checkbox" id="kcActivo" checked><span>Visible en la tienda</span></label>
+          <p class="tenue">Si algún producto del combo se queda sin stock, el combo aparece como agotado.</p>
+        </div>
+      </div>
+      <footer class="editor__pie">
+        <button type="button" class="btn btn--linea" id="kcCancelar">Cancelar</button>
+        <button type="submit" class="btn btn--marca">Guardar combo</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Confirmación -->
+  <dialog class="confirmar" id="confirmar">
+    <h2 id="kTitulo"></h2>
+    <p id="kTexto"></p>
+    <div class="confirmar__botones">
+      <button class="btn btn--linea" value="no" id="kNo">Cancelar</button>
+      <button class="btn btn--oscuro" value="si" id="kSi">Confirmar</button>
+    </div>
+  </dialog>
+
+  <div class="aviso-flotante" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="datos/catalogo.js"></script>
+  <script src="js/datos.js"></script>
+  <script src="js/graficos.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
