@@ -82,7 +82,7 @@
       ${p.disponible === false ? `<span class="sello sello--gris">Sin stock</span>` : p.antes ? `<span class="sello">${Math.round((1 - p.precio / p.antes) * 100)}% menos</span>` : ""}
       <div class="tarjeta__foto">${foto(p)}</div>
       <div class="tarjeta__info">
-        ${p.combo && p.ahorro ? `<span class="ahorro">Ahorrás ${bs(p.ahorro)}</span>` : ""}<span class="tarjeta__marca">${esc(p.marca || nombreCat(p.cat))}${(p.opciones || []).length > 1 ? ` <i class="tarjeta__ops">${p.opciones.length} opciones</i>` : ""}</span>
+        ${p.combo && p.ahorro ? `<span class="ahorro">Ahorrás ${bs(p.ahorro)}</span>` : ""}<span class="tarjeta__marca">${esc(p.marca || nombreCat(p.cat))}</span>
         <button class="tarjeta__nombre" data-ver="${esc(p.id)}">${esc(p.nombre)}</button>
         ${(p.opciones || []).length > 1 ? `<span class="tarjeta__opciones">${p.opciones.length} opciones</span>` : ""}
         <div class="tarjeta__pie">

@@ -8,9 +8,10 @@
   <meta property="og:title" content="FITYA | Suplementos y accesorios deportivos">
   <meta property="og:description" content="Armá tu pedido y envialo por WhatsApp.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#1a1426">
+  <meta name="theme-color" content="#0b0a12">
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="fuentes/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fuentes/montserrat.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fuentes/montserratcursiva.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/tienda.css">
 </head>
@@ -34,7 +35,8 @@
   </header>
 
   <main>
-    <section class="portada ancho">
+    <section class="heroe">
+    <div class="portada ancho">
       <div class="portada__texto">
         <h1 id="titulo">Tu suplemento, directo a tu WhatsApp.</h1>
         <p id="subtitulo"></p>
@@ -44,6 +46,9 @@
           <li><b>Envialo</b> por WhatsApp y coordinamos</li>
         </ol>
       </div>
+      <div class="portada__producto" aria-hidden="true">
+        <img class="frasco2" src="img/productos/ovoproteinfrutilla960.webp" alt="" width="262" height="400" loading="lazy" decoding="async">
+        <img class="frasco1" src="img/productos/ovoproteinchocolate960.webp" alt="" width="262" height="400" fetchpriority="high" decoding="async">
       <figure class="chat" aria-label="Así llega tu pedido a WhatsApp">
         <figcaption>
           <span class="chat__avatar">F</span>
@@ -54,6 +59,8 @@
           <p class="chat__respuesta">¡Hola! Ya revisamos stock, ¿te lo llevamos hoy?</p>
         </div>
       </figure>
+      </div>
+    </div>
     </section>
 
     <ul class="franja-confianza ancho" id="confianza"></ul>
@@ -238,7 +245,6 @@
   <div class="aviso-flotante" id="toast" role="status" aria-live="polite"></div>
 
   <script src="js/config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" onerror="void 0"></script>
   <script src="datos/catalogo.js"></script>
   <script src="js/datos.js"></script>
   <script src="js/tienda.js"></script>

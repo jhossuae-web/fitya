@@ -273,3 +273,25 @@
   .items-combo li { grid-template-columns: 1fr 70px 38px; }
   .items-combo select[data-campo=op] { grid-column: 1 / -2; }
 }
+
+/* ===== Montserrat: tamaños ajustados al nuevo estilo ===== */
+.admin { background: var(--placa); }
+.lateral { background: var(--tinta); }
+.nav button[aria-current="page"] { background: rgba(91, 44, 245, .4); }
+.lateral .logo { font-size: 28px; }
+.vista__cabeza h1 { font-size: clamp(26px, 3vw, 34px); font-weight: 900; font-style: italic; letter-spacing: -.035em; }
+.caja h2, .zona-peligro h2 { font-size: 18px; font-weight: 800; }
+.form-tienda legend { font-size: 18px; font-weight: 800; }
+.acceso__caja h1 { font-size: 26px; font-weight: 900; font-style: italic; }
+.editor__cabeza h2 { font-size: 22px; font-weight: 900; font-style: italic; }
+.confirmar h2 { font-size: 22px; font-weight: 800; }
+.cifra b { font-size: 28px; font-weight: 900; font-style: italic; letter-spacing: -.03em; }
+.cifra span { font-size: 12px; font-weight: 600; }
+.item__precio, .item-combo__precio strong { font-size: 18px; font-weight: 900; font-style: italic; letter-spacing: -.03em; }
+.cifra::before { background: var(--marca); }
+.tabla { font-size: 13px; }
+.item__nombre { font-size: 14px; font-weight: 700; }
+.item-combo__info b { font-size: 15px; }
+.chip { font-weight: 700; font-size: 13px; }
+.demo-aviso { font-size: 13px; }
+.tabla th button { padding: 12px 4px; }
