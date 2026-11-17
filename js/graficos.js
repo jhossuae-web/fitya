@@ -2,7 +2,7 @@
 window.G = (() => {
   const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const num = n => Number(n).toLocaleString("es-BO", { maximumFractionDigits: 1 });
-  const COLOR = "#6b2ef0", REJILLA = "#ece9f3", TEXTO = "#77708a";
+  const COLOR = "#4104a0", REJILLA = "#ece9f3", TEXTO = "#6a6380";
 
   // Escala "linda" para el eje Y
   function techo(max) {

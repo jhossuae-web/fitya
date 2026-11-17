@@ -17,7 +17,7 @@
 .nav button[aria-current="page"] { background: rgba(255, 255, 255, .1); color: #fff; }
 .lateral__pie { margin-top: auto; display: grid; gap: 6px; padding: 0 10px; font-size: 14px; }
 .lateral__pie .tenue { color: #8a829b; overflow: hidden; text-overflow: ellipsis; }
-.lateral__pie .enlace { color: #c9b8ff; justify-self: start; padding: 0; }
+.lateral__pie .enlace { color: #fbae17; justify-self: start; padding: 0; }
 .modo { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
 .modo::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: #f0b429; }
 .modo--nube::before { background: #3ecf7a; }
@@ -57,7 +57,7 @@
 .barra__valor small { font-weight: 400; color: var(--tenue); margin-left: 6px; }
 .barra__pista { display: block; grid-column: 1 / -1; height: 10px; border-radius: 4px; background: #f1eff6; overflow: hidden; }
 .barra__relleno { display: block; height: 100%; border-radius: 4px; background: var(--marca); }
-.barra--alerta .barra__relleno { background: #b9a8f0; }
+.barra--alerta .barra__relleno { background: #b9a4dd; }
 .marca-alerta { display: inline-block; font-size: 12px; font-weight: 600; color: var(--rojo); margin-left: 6px; }
 
 /* Tabla de productos */
@@ -207,8 +207,8 @@
 /* ===== Mejoras de UX y UI del panel ===== */
 .lateral { background: linear-gradient(180deg, #1a1426, #120e1b); }
 .nav button { transition: background-color .15s, color .15s; position: relative; }
-.nav button[aria-current="page"] { background: rgba(107, 46, 240, .35); }
-.nav button[aria-current="page"]::before { content: ""; position: absolute; left: -16px; top: 10px; bottom: 10px; width: 3px; border-radius: 0 3px 3px 0; background: #b9a1ff; }
+.nav button[aria-current="page"] { background: var(--marca); }
+.nav button[aria-current="page"]::before { content: ""; position: absolute; left: -16px; top: 10px; bottom: 10px; width: 3px; border-radius: 0 3px 3px 0; background: var(--pulso); }
 .contenido { max-width: 1400px; }
 .vista__cabeza { padding-bottom: 18px; border-bottom: 1px solid var(--linea); }
 .vista__cabeza h1 { font-size: clamp(34px, 4vw, 48px); }
@@ -234,11 +234,11 @@
 .soltar:hover { border-color: var(--marca); background: var(--lila); }
 
 .form-tienda fieldset { transition: box-shadow .2s; }
-.form-tienda fieldset:focus-within { box-shadow: 0 0 0 1.5px var(--marca), 0 8px 22px rgba(107, 46, 240, .08); }
-.campo input:focus, .campo select:focus, .campo textarea:focus { box-shadow: 0 0 0 4px rgba(107, 46, 240, .12); }
+.form-tienda fieldset:focus-within { box-shadow: 0 0 0 1.5px var(--marca), 0 8px 22px rgba(65, 4, 160, .08); }
+.campo input:focus, .campo select:focus, .campo textarea:focus { box-shadow: 0 0 0 4px rgba(65, 4, 160, .12); }
 .editor__pie, .editor__cabeza { background: var(--papel); }
 .editor__pie { box-shadow: 0 -8px 20px rgba(26, 20, 38, .05); }
-.acceso { background: radial-gradient(60% 50% at 50% 0%, rgba(107, 46, 240, .14), transparent), var(--fondo); }
+.acceso { background: radial-gradient(60% 50% at 50% 0%, rgba(65, 4, 160, .14), transparent), var(--fondo); }
 .demo-aviso { border-left: 4px solid #f0b429; }
 
 @media (max-width: 900px) {
@@ -277,7 +277,7 @@
 /* ===== Montserrat: tamaños ajustados al nuevo estilo ===== */
 .admin { background: var(--placa); }
 .lateral { background: var(--tinta); }
-.nav button[aria-current="page"] { background: rgba(91, 44, 245, .4); }
+.nav button[aria-current="page"] { background: var(--marca); }
 .lateral .logo { font-size: 28px; }
 .vista__cabeza h1 { font-size: clamp(26px, 3vw, 34px); font-weight: 900; font-style: italic; letter-spacing: -.035em; }
 .caja h2, .zona-peligro h2 { font-size: 18px; font-weight: 800; }
